@@ -7,9 +7,9 @@ public class SpectreMotionControl : MonoBehaviour
     private bool jumpKeyPressed;
     private float horizontalInput;
     private Rigidbody2D rb;
-    private int maxJumps = 2;       //trying to allow double jump
-    private int jumpCount = 0;      //struggling to find a way to reset this.
-                                    //i need some sort of reset on collision command.
+    private int maxJumps = 2;       //Max number of jumps
+    private int jumpCount = 0;
+
     public int speedModifier = 1;
     public int jumpModifier = 1;
 
@@ -40,15 +40,21 @@ public class SpectreMotionControl : MonoBehaviour
         //jump
         if (jumpKeyPressed)
         {
-            /*if (jumpCount <= maxJumps)        //this prevents jumps over the maximum
-            {*/                                 //need a reset on jumpCount before implementing.
+            if (jumpCount < maxJumps)        //this prevents jumps over the maximum
+            {
                 Debug.Log("Jumping");
                 ++jumpCount;
                 rb.AddForce(Vector3.up * jumpModifier, ForceMode2D.Impulse);
-            /*}
+            }
             else
-                Debug.Log("Over max jumps.");*/
+                Debug.Log("Over max jumps.");
             jumpKeyPressed = false;
         }
+    }
+
+    void OnCollisionEnter2D()       //resets jump count on landing (or other collision)
+    {
+        Debug.Log("Collision - Jumps reset");
+        jumpCount = 0;
     }
 }
