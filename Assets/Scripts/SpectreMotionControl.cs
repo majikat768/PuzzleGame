@@ -42,19 +42,15 @@ public class SpectreMotionControl : MonoBehaviour
         {
             if (jumpCount < maxJumps)        //this prevents jumps over the maximum
             {
-                Debug.Log("Jumping");
                 ++jumpCount;
                 rb.AddForce(Vector3.up * jumpModifier, ForceMode2D.Impulse);
             }
-            else
-                Debug.Log("Over max jumps.");
             jumpKeyPressed = false;
         }
     }
 
     void OnCollisionEnter2D()       //resets jump count on landing (or other collision)
     {
-        Debug.Log("Collision - Jumps reset");
-        jumpCount = 0;
+       jumpCount = 0;
     }
 }
