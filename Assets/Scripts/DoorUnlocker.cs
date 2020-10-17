@@ -4,28 +4,16 @@ using UnityEngine;
 
 public class DoorUnlocker : MonoBehaviour
 {
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Debug.Log("Knock knock!");
-
+    void OnTriggerEnter2D(Collider2D collision)
+    {   
         //this checks for identical colors and then deletes the collider
         if (collision.gameObject.GetComponent<SpriteRenderer>().color == gameObject.GetComponent<SpriteRenderer>().color)
-        {
-            Destroy(GetComponent("BoxCollider2D"));
-            Debug.Log("Door Unlocked");
-        }
-        else
-            Debug.Log("Door locked");
+            GetComponent<BoxCollider2D>().enabled = false;
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("You forgot to lock the door.");
-
         //this puts the collider back on.
-        //Currently this puts a collider back on AS SOON AS you disconnect, e.g. destroy collider
-        //we need some kind of delay or check to see if the player has left the door
-        //We can't get player location after the collider is gone. idk...
-        BoxCollider2D bc2d = gameObject.AddComponent<BoxCollider2D>();
+        GetComponent<BoxCollider2D>().enabled = true;
     }
 }
