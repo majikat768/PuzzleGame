@@ -5,8 +5,8 @@ public class Energy
 {
     public enum EnergyType
     {
-        FIRE,
-        WATER,
+        RED,
+        BLUE,
         DARK,
         LIGHT
     };
@@ -15,9 +15,9 @@ public class Energy
     {
         switch(type)
         {
-            case EnergyType.FIRE:
+            case EnergyType.RED:
                 return new Color(1f, 0, 0);
-            case EnergyType.WATER:
+            case EnergyType.BLUE:
                 return new Color(0f, 0.7f, 1f);
             case EnergyType.DARK:
                 return new Color(0.7f, 0f, 1f);
