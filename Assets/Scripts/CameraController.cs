@@ -19,8 +19,6 @@ public class CameraController : MonoBehaviour
         cam = this.GetComponent<Camera>();
         ViewportSize = new Vector2(cam.aspect * cam.orthographicSize * 2, cam.orthographicSize * 2);
         CurrentRect = new Rect(new Vector2(0, 0), ViewportSize);
-        Debug.Log(ViewportSize);
-        Debug.Log(CurrentRect);
         cam.transform.position = new Vector3(CurrentRect.x + CurrentRect.width / 2, CurrentRect.y + CurrentRect.height / 2, cam.transform.position.z);
         // FindWithTag is a built in function that just locates the gameobject in the scene with the applied tag.
         // so now the variable player refers to the gameobject in the scene called Player.
@@ -66,7 +64,6 @@ public class CameraController : MonoBehaviour
 
     IEnumerator MoveToPlayer()
     {
-        Debug.Log("moving");
         float x = cam.transform.position.x;
         float y = cam.transform.position.y;
         Vector3 newPos = new Vector3(CurrentRect.x, CurrentRect.y, 0f) + 
@@ -74,13 +71,8 @@ public class CameraController : MonoBehaviour
                                     new Vector3(0, 0, cam.transform.position.z);
         float newX = newPos.x;
         float newY = newPos.y;
-        Debug.Log(x);
-        Debug.Log(y);
-        Debug.Log(newX);
-        Debug.Log(newY);
         while(x != newX || y != newY)
         {
-            Debug.Log("moving");
             x = Mathf.MoveTowards(x, newX, moveTime);
             y = Mathf.MoveTowards(y, newY, moveTime);
             cam.transform.position = new Vector3(x, y, cam.transform.position.z);

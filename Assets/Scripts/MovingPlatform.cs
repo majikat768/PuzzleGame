@@ -11,40 +11,62 @@ public class MovingPlatform : MonoBehaviour
     int direction = 1;
     [SerializeField]
     float speed = 2f;
+    [SerializeField]
+    bool MoveWithPlayer = false;
+    bool moving = false;
 
     private void Start()
     {
         transform.position = startPos; 
+        if(!MoveWithPlayer)
+        {
+            moving = true;
+        }
     }
 
     private void Update()
     {
-        if(direction == 1)
+        if (moving)
         {
-            transform.position = Vector3.MoveTowards(transform.position, endPos, Time.deltaTime * speed);
-            if(Vector3.Distance(transform.position,endPos) < 0.1f)
+            if (direction == 1)
             {
-                direction = -1;
+                transform.position = Vector3.MoveTowards(transform.position, endPos, Time.deltaTime * speed);
+                if (Vector3.Distance(transform.position, endPos) < 0.1f)
+                {
+                    direction = -1;
+                }
+            }
+            else if (!MoveWithPlayer && direction == -1)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, startPos, Time.deltaTime * speed);
+                if (Vector3.Distance(transform.position, startPos) < 0.1f)
+                {
+                    direction = 1;
+                }
             }
         }
-        else if(direction == -1)
+        else if (Vector3.Distance(transform.position, startPos) > 0.1f)
         {
             transform.position = Vector3.MoveTowards(transform.position, startPos, Time.deltaTime * speed);
-            if(Vector3.Distance(transform.position,startPos) < 0.1f)
-            {
-                direction = 1;
-            }
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         collision.transform.parent = this.transform;
+        if(MoveWithPlayer)
+        {
+            moving = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         collision.transform.parent = null;
+        if(MoveWithPlayer)
+        {
+            moving = false;
+        }
     }
     /*
     GameObject player;
