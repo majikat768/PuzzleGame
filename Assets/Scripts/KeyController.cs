@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class KeyController : MonoBehaviour
 {
-    GameObject energyIndicatorPanel;
     float movementDist = .5f;
     float moveSpeed = 4f;
     float rotSpeed = 25f;
@@ -16,7 +15,6 @@ public class KeyController : MonoBehaviour
 
     void Start()
     {
-        energyIndicatorPanel = GameObject.FindWithTag("EnergyIndicator");
         pos = transform.position;
         this.GetComponent<SpriteRenderer>().color = Energy.GetColor(this.energyType);
     }
@@ -33,8 +31,6 @@ public class KeyController : MonoBehaviour
         if(collision.gameObject.tag.Equals("Player"))
         {
             GameObject.FindWithTag("Player").GetComponent<PlayerController>().SetEnergyType(this.energyType);
-            GameObject.FindWithTag("EnergyIndicator").GetComponentsInChildren<Image>()[1].color = this.gameObject.GetComponent<SpriteRenderer>().color;
-            Destroy(this.gameObject);
         }
     }
 }
